@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Budapesti Szobrok Adatbázis Projekt</title>
+</head>
+<body>
+    <div class="header">
+        <h1>Budapesti Szobrok Adatbázis Projekt</h1>
+        <p>Órai SQL feladat HTML-es vizualizálása</p>
+    </div>
+    <div class="parent-container">
+        <div class="card-container1">
+            <div class="rotating-card">
+                <div class="card-front">
+                    <h2>1Margit</h2>
+                    <p>Feladat: Soroljuk fel lekérdezés segítségével ábécérendben a Margitsziget szobrainak címét és a felállításuktól eltelt időt.</p>
+                </div>
+                <div class="card-back">
+                    <h4>Megoldás</h4>
+                    <pre><code>SELECT cim as "Neve", hely as "Helyszín", 2026-ev as "Szobor kora" 
+FROM szobor
+WHERE hely = 'Margitsziget'
+ORDER BY cim ASC;
+                    </code></pre>
+                    <img src="imgs/1Margit.png" alt="1. feladat megoldás képe" class="solution-img">
+                </div>
+            </div>
+        </div>
+        <div class="card-container2">
+            <div class="rotating-card">
+                <div class="card-front">
+                    <h2>2Legtobb</h2>
+                    <p>Feladat: Melyik évben állították fel a legtöbb szobrot, és ez hány alkotást jelent?</p>
+                </div>
+                <div class="card-back">
+                    <h4>Megoldás</h4>
+                    <pre><code>SELECT ev AS "Év", COUNT(*) AS "Szobrok száma"
+FROM szobor
+WHERE ev IS NOT NULL
+GROUP BY ev
+ORDER BY COUNT(*) DESC
+LIMIT 1;</code></pre>
+                    <img src="imgs/2Legtobb.png" alt="2. feladat megoldás képe" class="solution-img">
+                </div>
+            </div>
+        </div>
+        <div class="card-container3">
+            <div class="rotating-card">
+                <div class="card-front">
+                    <h2>3Vegyes</h2>
+                    <p>Feladat: Hány olyan vegyes technikájú szobor van, amely egyszerre tartalmaz mészkövet és bronzot?</p>
+                </div>
+                <div class="card-back">
+                    <h4>Megoldás</h4>
+                    <pre><code>SELECT COUNT(DISTINCT szoborid) AS "Vegyes szobrok száma"
+FROM anyag
+WHERE nev = 'mészkő'
+  AND szoborid IN (
+    SELECT szoborid FROM anyag WHERE nev = 'bronz');</code></pre>
+                    <img src="imgs/3Vegyes.png" alt="3. feladat megoldás képe" class="solution-img">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
